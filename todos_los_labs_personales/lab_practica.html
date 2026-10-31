@@ -3,27 +3,67 @@
 
 <head>
     <title>Lab</title>
+    <style>
+        footer a {
+            margin-right: 15px;
+        }
+    </style>
+    <style>
+        table,
+        td,
+        th {
+            border: 1px solid black;
+        }
+    </style>
 </head>
 
 <body>
     <form action="/formulario" method="POST">
-        <p>CREDENCIALES DE BRAWL PASS</p>
-        <label for="correo">Correo</label>
-        <input value="vpd en correo" type="text" id="correo" name="Correo" placeholder="brawl@gmail.com" /><br>
-        <label for="contrasenia">Contrasenia</label>
-        <input value="vpd en contrasenia" type="password" id="contrasenia" name="Contrasenia" /><br>
-        <label for="comentario">Comentario</label><br>
-        <textarea cols="40" rows="10" id="comentario"
-            placeholder="Queja a Krissley...">valor por defecto en txtarea</textarea> <br>
-        <button type="button"><img src="brawlpe.jpg" height="60" /></button><br>
-        <button type="reset">reiniciar formulario</button><br>
-        <button type="submit">enviar formulario</button>
-        <br>
+        <header id="Inicio">
+            <h1>CREDENCIALES DE BRAWL PASS</h1>
+        </header>
+        <section>
+            <div id="entrada-correo">
+                <label for="correo">Correo</label>
+                <input value="vpd en correo" type="text" id="correo" name="Correo" placeholder="brawl@gmail.com" /><br>
+            </div>
+            <div id="entrada-contrasenia">
+                <label for="contrasenia">Contrasenia</label>
+                <input value="vpd en contrasenia" type="password" id="contrasenia" name="Contrasenia" /><br>
+            </div>
+            <div id="entrada-comentario">
+                <label for="comentario">Comentario</label><br>
+                <textarea cols="40" rows="10" id="comentario"
+                    placeholder="Queja a Krissley...">valor por defecto en txtarea</textarea> <br>
+            </div>
+            <button type="button"><img src="brawlpe.jpg" height="60" /></button>
+            <button type="reset">reiniciar formulario</button>
+            <button type="submit">enviar formulario</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>nombre</th>
+                        <th>apellido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Arnold</td>
+                        <td>Ponce</td>
+                    </tr>
+                    <tr>
+                        <td>Nelson</td>
+                        <td>Ponce</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <footer>
+            <a href="#incio">Inicio</a>
+            <a href="#entrada-correo">Iniciar seion aquí!</a>
+            <br><a href="https://www.linkedin.com/in/ronald-ponce-ramirez-b5a504379/">Contactame aquí!</a>
+        </footer>
     </form>
-    <h1>Estructura <span style="color:brown">WEB</span> simple de etiquetas.</h1>
-    <p>A que estudiar peeee, o eres un nuv de brawl</p><br>
-    <img src="brawlpe.jpg" height="400" /><br>
-    <a target="_blank" href="https://supercell.com/">GO BRAWL!</a>
 </body>
 
 </html>
