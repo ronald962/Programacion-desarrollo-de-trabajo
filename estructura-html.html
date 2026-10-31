@@ -24,6 +24,17 @@
     <!--puede ser height o width-->
     <p>Imagen con diferentes dimensiones<br></p>
     <img src="six_seven.jpg" height="200" width="300" />
+    <!--nuevas etiquetas para interactuar con el usuario-->
+    <form action="/formulario" method="POST">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="Nombre" placeholder="Arnold...." /><br>
+        <label for="apellido">Apellido</label>
+        <input type="text" id="apellido" name="Apellido" placeholder="Ponce...." /><br>
+        <label for="comentario">Comentario</label><br>
+        <textarea cols="40" rows="10" id="comentario" placeholder="Nuevas etiquetas..."></textarea> <br>
+        <input type="submit">
+        <br>
+    </form>
 </body>
 
 </html>
