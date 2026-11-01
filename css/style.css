@@ -1,11 +1,47 @@
 #titulo {
+    /*selector por id*/
     color: tomato;
 }
 
 p.parrafo {
+    /*selector de clases que están en la etiqueta p y que tengan clase control*/
     color: aquamarine;
 }
 
 p.control {
+    /*selector de clases q están en la etiqueta p y que tengan clase control*/
     color: blue;
 }
+
+div p {
+    /*selector de div con todas las etiquetas hijas de hijas de hijas.... de <p>*/
+    color: blueviolet;
+}
+
+* {
+    /*Selector universal*/
+    font-size: 24px;
+    color: brown;
+}
+
+.color {
+    color: #ff0000;
+}
+
+.color2 {
+    color: rgb(0, 0, 255);
+}
+
+.color {
+    /* border: 4px black ridge; */
+    border-style: solid;
+    border-color: ridge;
+    border-radius: 10px;
+}
+
+
+#boton {
+    border: 4px red outset;
+}
+
+/*Este es un comentario*/
