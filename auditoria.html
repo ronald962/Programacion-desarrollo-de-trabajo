@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+</head>
+
+<body>
+    <header>
+        <h1 id="titulo">CHECKLIST HARDENING</h1>
+        <nav>
+            <a href="auditoria.html">AUDITORIA</a>
+            <a href="checklist.html">CHECKLIST</a>
+            <a href="reporte.html">REPORTE</a>
+        </nav>
+    </header>
+    <section>
+        <article>
+            <h2>Nueva auditoria</h2>
+            <P>
+                <label for="activo">Nombre del activo</label>
+                <input type="text" name="Activo" id="activo" placeholder="Servidor-Web-01" />
+            </P>
+            <p>
+                <label for="responsable">Responsable</label>
+                <input type="text" name="Responsable" id="responsable" placeholder="Arnold" />
+            </p>
+            <p>
+                <label for="fecha">Fecha</label>
+                <input type="date" name="Fecha" id="fecha" />
+            </p>
+            <p>
+                <label for="lista">Tipo de lista</label>
+                <select id="lista">
+                    <option value="">Seleccione...</option>
+                    <option value="so">so</option>
+                    <option value="web">servidor web</option>
+                    <option value="red">red wifi</option>
+                </select>
+            </p>
+            <button type="submit">Crear</button>
+        </article>
+        <article>
+            <h2>Auditorias existentes</h2>
+            <label for="buscar">Buscar</label>
+            <input type="text" name="Buscar" id="buscar" placeholder="Red UNAS" />
+            <label for="tipo">Tipo</label>
+            <select id="tipo">
+                <option value="">Todos</option>
+                <option value="so">so</option>
+                <option value="web">servidor web</option>
+                <option value="red">red wifi</option>
+            </select>
+        </article>
+    </section>
+    <footer>
+        <section>
+            <a href="#titulo">volver al Inicio</a>
+            <a target="_blank" href="https://www.linkedin.com/in/arnold-cesar-ponce-ramirez-b5a504379/">Arnold</a>
+            <a target="_blank" href="https://www.linkedin.com/in/sayury-lazo-gonzales-a419993bb/">Lazo</a>
+        </section>
+        <p>Copyrigth 2026</p>
+    </footer>
+</body>
+
+</html>
