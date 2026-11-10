@@ -1,0 +1,240 @@
+:root {
+    --color-fondo: #efefef;
+    --color-encabezado: #364552;
+    --color-pie: #000000;
+    --color-tarjeta: #ffffff;
+    --color-texto: #000000;
+    --color-texto-claro: #efefef;
+    --color-enlace-hover: #ffffff;
+    --color-borde: #c9ced3;
+    --espacio: 0.5rem 2rem;
+    --radio: 0.5rem;
+    --sombra-hover: 0 0.1rem 0.4rem rgba(0, 0, 0, 30%);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    /*footer*/
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+header {
+    background-color: var(--color-encabezado);
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+header h1 {
+    font-size: clamp(1.75rem, 6vw, 4rem);
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1rem;
+    margin-top: var(--espacio);
+}
+
+.nav-toggle {
+    display: inline-block;
+    font: inherit;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+nav.cerrado a {
+    display: none;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--espacio);
+}
+
+section article {
+    background-color: var(--color-tarjeta);
+    margin: var(--espacio) 0;
+    border-radius: var(--radio);
+    padding: 0.25rem 0;
+    transition: box-shadow 0.2s ease;
+}
+
+section article:hover {
+    box-shadow: var(--sombra-hover);
+}
+
+section article:has(> a > h3) {
+    cursor: pointer;
+}
+
+section article>a {
+    display: flow-root;
+}
+
+section article h3,
+section article p,
+section article h2,
+section article button {
+    margin: var(--espacio);
+}
+
+header a,
+footer a {
+    color: var(--color-texto-claro);
+    transition: color 0.2s ease;
+}
+
+header a:hover,
+footer a:hover {
+    color: var(--color-enlace-hover);
+    text-decoration: underline;
+}
+
+footer {
+    background-color: var(--color-pie);
+    padding: 2rem 1rem;
+    color: white;
+    display: grid;
+    gap: 0.5rem;
+}
+
+footer section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+}
+
+footer p {
+    margin: 0;
+}
+
+a {
+    color: var(--color-texto);
+    text-decoration: none;
+}
+
+section article p a,
+section article>a:not(:has(h3)) {
+    text-decoration: underline;
+}
+
+/* MANTIENE */
+#indicacion {
+    font-size: 20px;
+}
+
+input:not([type="radio"]):not([type="checkbox"]),
+select,
+textarea {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font: inherit;
+    padding: 0.5rem;
+}
+
+progress {
+    max-width: 100%;
+}
+
+article:has(table) {
+    overflow-x: auto;
+}
+
+table {
+    width: calc(100% - 2 * var(--espacio));
+    margin: var(--espacio);
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-borde);
+}
+
+@media (min-width: 601px) {
+    header {
+        padding: 3rem 2rem;
+    }
+
+    .nav-toggle {
+        display: none;
+    }
+
+    nav.cerrado a {
+        display: inline;
+    }
+
+    .container {
+        max-width: 600px;
+    }
+
+
+    footer {
+        padding: 3rem;
+        grid-template-columns: 1fr auto;
+    }
+
+    footer section {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        justify-content: flex-end;
+    }
+}
+
+@media (min-width: 961px) {
+    .container {
+        max-width: 800px;
+    }
+
+    nav {
+        gap: 0.5rem 2rem;
+    }
+}
+
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+
+    header {
+        background: none;
+        color: black;
+        padding: 0;
+    }
+
+    nav,
+    .nav-toggle,
+    footer,
+    button {
+        display: none;
+    }
+
+    .container,
+    #lista-reporte {
+        max-width: none;
+    }
+
+    section article {
+        box-shadow: none;
+        border: 1px solid #999;
+        break-inside: avoid;
+    }
+}

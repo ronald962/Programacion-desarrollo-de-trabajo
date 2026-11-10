@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reporte - CHECKLIST HARDENING</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body data-pagina="reporte">
@@ -17,63 +18,76 @@
             <a href="reporte.html">REPORTE</a>
         </nav>
     </header>
-    <main>
-        <h2>Reporte de Auditorias</h2>
-        <p id="rep-vacio">No hay una auditoria</p>
+    <main class="container">
+        <section>
+            <article>
+                <h2>Reporte de Auditorias</h2>
+                <p id="rep-vacio">No hay una auditoria</p>
+            </article>
+        </section>
         <div id="lista-reporte" hidden>
             <section>
-                <h3>Datos de la auditoria</h3>
-                <ul>
-                    <li>Activo: <span id="rep-nombre"></span></li>
-                    <li>Tipo de lista: <span id="rep-tipo"></span></li>
-                    <li>Responsable: <span id="rep-responsable"></span></li>
-                    <li>Fecha: <span id="rep-fecha"></span></li>
-                    <li>Estado: <span id="rep-estado"></span></li>
-                </ul>
+                <article>
+                    <h3>Datos de la auditoria</h3>
+                    <ul>
+                        <li>Activo: <span id="rep-nombre"></span></li>
+                        <li>Tipo de lista: <span id="rep-tipo"></span></li>
+                        <li>Responsable: <span id="rep-responsable"></span></li>
+                        <li>Fecha: <span id="rep-fecha"></span></li>
+                        <li>Estado: <span id="rep-estado"></span></li>
+                    </ul>
+                </article>
             </section>
             <section>
-                <h3 id="titulo-avance">Avance general</h3>
-                <p>
-                    <label for="avance-general">Cumplido:</label>
-                    <progress id="avance-general" max="100" value="0">0 %</progress>
-                    <span id="rep-avance">0 %</span>
-                </p>
-                <ul>
-                    <li>Aplicados: <span id="rep-aplicados">0</span></li>
-                    <li>Pendientes: <span id="rep-pendientes">0</span></li>
-                    <li>No aplica: <span id="rep-noaplica">0</span></li>
-                </ul>
+                <article>
+                    <h3 id="titulo-avance">Avance general</h3>
+                    <p>
+                        <label for="avance-general">Cumplido:</label>
+                        <progress id="avance-general" max="100" value="0">0 %</progress>
+                        <span id="rep-avance">0 %</span>
+                    </p>
+                    <ul>
+                        <li>Aplicados: <span id="rep-aplicados">0</span></li>
+                        <li>Pendientes: <span id="rep-pendientes">0</span></li>
+                        <li>No aplica: <span id="rep-noaplica">0</span></li>
+                    </ul>
+                </article>
             </section>
             <section>
-                <h3 id="titulo-categorias">Cumplido por categoría</h3>
-                <table>
-                    <caption>Porcentaje de controles aplicados por categoría</caption>
-                    <thead>
-                        <tr>
-                            <th scope="col">Categoría</th>
-                            <th scope="col">Aplicados</th>
-                            <th scope="col">Total</th>
-                            <th scope="col">Porcentaje</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabla-categorias"></tbody>
-                </table>
+                <article>
+                    <h3 id="titulo-categorias">Cumplido por categoría</h3>
+                    <table>
+                        <caption>Porcentaje de controles aplicados por categoría</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Categoría</th>
+                                <th scope="col">Aplicados</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Porcentaje</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-categorias"></tbody>
+                    </table>
+                </article>
             </section>
             <section>
-                <h3 id="titulo-pendientes">Pendientes de prioridad alta</h3>
-                <ul id="lista-pendientes"></ul>
-                <p id="mensaje-sin-pendientes">No hay pendientes</p>
+                <article>
+                    <h3 id="titulo-pendientes">Pendientes de prioridad alta</h3>
+                    <ul id="lista-pendientes"></ul>
+                    <p id="mensaje-sin-pendientes">No hay pendientes</p>
+                </article>
             </section>
         </div>
     </main>
     <footer>
         <section>
-            <a href="#titulo">Ir arriba</a>
             <a target="_blank" href="https://www.linkedin.com/in/arnold-cesar-ponce-ramirez-b5a504379/"
                 rel="noopener noreferrer">Arnold</a>
             <a target="_blank" href="https://www.linkedin.com/in/sayury-lazo-gonzales-a419993bb/"
                 rel="noopener noreferrer">Lazo</a>
+            <p><a href="#titulo">Ir arriba</a></p>
         </section>
+        <p>Contacto</p>
         <p>Copyright 2026</p>
     </footer>
 </body>
