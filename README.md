@@ -57,7 +57,8 @@ Cada tipo de lista tiene al menos 8 controles.
 ```
 checklist-hardening/
 ├── README.md
-├── index.html        (Auditorías)
+├── index.html
+├── auditorias.html
 ├── checklist.html
 └── reporte.html
 ```
