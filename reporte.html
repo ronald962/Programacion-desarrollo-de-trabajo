@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte - CHECKLIST HARDENING</title>
+</head>
+
+<body data-pagina="reporte">
+    <header>
+        <h1 id="titulo">CHECKLIST HARDENING</h1>
+        <nav>
+            <a href="auditoria.html">AUDITORIA</a>
+            <a href="checklist.html">CHECKLIST</a>
+            <a href="reporte.html">REPORTE</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Reporte de Auditorias</h2>
+        <p id="rep-vacio">No hay una auditoria</p>
+        <div id="lista-reporte">
+            <section>
+                <h3>Datos de la auditoria</h3>
+                <ul>
+                    <li>Activo: <span id="rep-nombre"></span></li>
+                    <li>Tipo de lista: <span id="rep-tipo"></span></li>
+                    <li>Responsable: <span id="rep-responsable"></span></li>
+                    <li>Fecha: <span id="rep-fecha"></span></li>
+                    <li>Estado: <span id="rep-estado"></span></li>
+                </ul>
+            </section>
+            <section>
+                <h3 id="titulo-avance">Avance general</h3>
+                <p>
+                    <label for="avance-general">Cumplido:</label>
+                    <progress id="avance-general" max="100" value="0">0 %</progress>
+                    <span id="rep-avance">0 %</span>
+                </p>
+                <ul>
+                    <li>Aplicados: <span id="rep-aplicados">0</span></li>
+                    <li>Pendientes: <span id="rep-pendientes">0</span></li>
+                    <li>No aplica: <span id="rep-noaplica">0</span></li>
+                </ul>
+            </section>
+            <section>
+                <h3 id="titulo-categorias">Cumplido por categoría</h3>
+                <table>
+                    <caption>Porcentaje de controles aplicados por categoría</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Categoría</th>
+                            <th scope="col">Aplicados</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Porcentaje</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-categorias"></tbody>
+                </table>
+            </section>
+            <section>
+                <h3 id="titulo-pendientes">Pendientes de prioridad alta</h3>
+                <ul id="lista-pendientes"></ul>
+                <p id="mensaje-sin-pendientes">No hay pendientes</p>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <section>
+            <a href="#titulo">volver al Inicio</a>
+            <a target="_blank" href="https://www.linkedin.com/in/arnold-cesar-ponce-ramirez-b5a504379/"
+                rel="noopener noreferrer">Arnold</a>
+            <a target="_blank" href="https://www.linkedin.com/in/sayury-lazo-gonzales-a419993bb/"
+                rel="noopener noreferrer">Lazo</a>
+        </section>
+        <p>Copyright 2026</p>
+    </footer>
+</body>
+
+</html>
