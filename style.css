@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    background-color: white;
+    background-color: #efefef;
 }
 
 header {
@@ -17,4 +17,26 @@ header h1 {
 .container {
     width: 400px;
     margin: 0 auto;
+}
+
+section article {
+    background-color: white;
+    margin: 1rem 0;
+    border-radius: 0.5rem;
+    padding: 0.25rem 0;
+}
+
+section article:hover {
+    box-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 30%);
+}
+
+section article h3,
+section article p,
+section article h2,
+section article button {
+    margin: 1rem;
+}
+
+#indicacion {
+    font-size: 20px;
 }
