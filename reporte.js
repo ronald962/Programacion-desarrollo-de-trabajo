@@ -1,18 +1,5 @@
-const auditoriaPrueba = {
-    activo: "Servidor-Web-01 (prueba)",
-    responsable: "Responsable de prueba",
-    fecha: "2026-11-08",
-    tipo: "web",
-    cerrada: false,
-    controles: crearControles("web")
-};
-
-auditoriaPrueba.controles[0].estado = "aplicado";
-auditoriaPrueba.controles[0].nota = "Certificado verificado.";
-auditoriaPrueba.controles[5].estado = "aplicado";
-auditoriaPrueba.controles[6].estado = "aplicado";
-auditoriaPrueba.controles[7].estado = "no-aplica";
-auditoriaPrueba.controles[2].nota = "Falta coordinar con el responsable.";
+const todas = cargarAuditorias();
+const auditoriaMostrada = buscarActual(todas);
 
 const textoVacio = document.getElementById("rep-vacio");
 const contenidoReporte = document.getElementById("lista-reporte");
@@ -31,10 +18,11 @@ function mostrarReporte(auditoria) {
     textoVacio.hidden = true;
     contenidoReporte.hidden = false;
 
+    // Datos generales
     document.getElementById("rep-nombre").textContent = auditoria.activo;
     document.getElementById("rep-tipo").textContent = nombresTipo[auditoria.tipo];
     document.getElementById("rep-responsable").textContent = auditoria.responsable;
-    const partesFecha = auditoria.fecha.split("-"); // 2026-11-08 -> 08/11/2026
+    const partesFecha = auditoria.fecha.split("-");
     document.getElementById("rep-fecha").textContent = partesFecha[2] + "/" + partesFecha[1] + "/" + partesFecha[0];
     document.getElementById("rep-estado").textContent = auditoria.cerrada ? "Cerrada" : "Abierta";
 
@@ -99,4 +87,8 @@ function mostrarReporte(auditoria) {
     mensajeSinPendientes.hidden = cantidadPendientes > 0;
 }
 
-mostrarReporte(auditoriaPrueba);
+if (auditoriaMostrada === null) {
+    textoVacio.textContent = "No hay una auditoría abierta. Elige una en la página Auditorías.";
+} else {
+    mostrarReporte(auditoriaMostrada);
+}

@@ -1,5 +1,12 @@
-let auditorias = [];
+let auditorias = cargarAuditorias();
+
 let siguienteId = 1;
+for (let i = 0; i < auditorias.length; i++) {
+    if (auditorias[i].id >= siguienteId) {
+        siguienteId = auditorias[i].id + 1;
+    }
+}
+
 let idEditando = null;
 
 const formulario = document.getElementById("formulario");
@@ -15,6 +22,7 @@ const selectTipo = document.getElementById("tipo");
 const contenedor = document.getElementById("lista-auditorias");
 const mensajeVacio = document.getElementById("mensaje-vacio");
 
+
 function formatearFecha(fecha) {
     const partes = fecha.split("-");
     return partes[2] + "/" + partes[1] + "/" + partes[0];
@@ -28,6 +36,9 @@ function buscarPosicion(id) {
     }
     return -1;
 }
+
+
+// ---------- CREAR y EDITAR ----------
 
 formulario.addEventListener("submit", function (evento) {
     evento.preventDefault();
@@ -51,6 +62,7 @@ formulario.addEventListener("submit", function (evento) {
             fecha: fecha,
             tipo: tipoLista,
             cerrada: false,
+            justificacion: "",
             controles: crearControles(tipoLista)
         };
         siguienteId++;
@@ -64,6 +76,7 @@ formulario.addEventListener("submit", function (evento) {
         terminarEdicion();
     }
 
+    guardarAuditorias(auditorias);
     mostrarAuditorias();
 });
 
@@ -94,6 +107,11 @@ function terminarEdicion() {
 
 botonCancelar.addEventListener("click", terminarEdicion);
 
+function abrirAuditoria(id) {
+    guardarActual(id);
+    window.location.href = "checklist.html";
+}
+
 function eliminarAuditoria(id) {
     const posicion = buscarPosicion(id);
     const quiere = confirm("¿Seguro que quieres eliminar \"" + auditorias[posicion].activo + "\"?");
@@ -103,6 +121,11 @@ function eliminarAuditoria(id) {
     }
 
     auditorias.splice(posicion, 1);
+    guardarAuditorias(auditorias);
+
+    if (leerIdActual() === id) {
+        olvidarActual();
+    }
 
     if (idEditando === id) {
         terminarEdicion();
@@ -121,12 +144,22 @@ function duplicarAuditoria(id) {
         fecha: original.fecha,
         tipo: original.tipo,
         cerrada: false,
+        justificacion: "",
         controles: crearControles(original.tipo)
     };
     siguienteId++;
     auditorias.push(copia);
+    guardarAuditorias(auditorias);
 
     mostrarAuditorias();
+}
+
+function crearBoton(texto, accion) {
+    const boton = document.createElement("button");
+    boton.type = "button";
+    boton.textContent = texto;
+    boton.addEventListener("click", accion);
+    return boton;
 }
 
 function crearTarjeta(a) {
@@ -154,29 +187,26 @@ function crearTarjeta(a) {
     parrafoAvance.appendChild(document.createTextNode(" " + avance.porcentaje + " %"));
     tarjeta.appendChild(parrafoAvance);
 
-    const botonEditar = document.createElement("button");
-    botonEditar.type = "button";
-    botonEditar.textContent = "Editar";
-    botonEditar.addEventListener("click", function () {
+    const estado = document.createElement("p");
+    if (a.cerrada) {
+        estado.textContent = "Estado: Cerrada";
+    } else {
+        estado.textContent = "Estado: Abierta";
+    }
+    tarjeta.appendChild(estado);
+
+    tarjeta.appendChild(crearBoton("Abrir", function () {
+        abrirAuditoria(a.id);
+    }));
+    tarjeta.appendChild(crearBoton("Editar", function () {
         editarAuditoria(a.id);
-    });
-    tarjeta.appendChild(botonEditar);
-
-    const botonDuplicar = document.createElement("button");
-    botonDuplicar.type = "button";
-    botonDuplicar.textContent = "Duplicar";
-    botonDuplicar.addEventListener("click", function () {
+    }));
+    tarjeta.appendChild(crearBoton("Duplicar", function () {
         duplicarAuditoria(a.id);
-    });
-    tarjeta.appendChild(botonDuplicar);
-
-    const botonEliminar = document.createElement("button");
-    botonEliminar.type = "button";
-    botonEliminar.textContent = "Eliminar";
-    botonEliminar.addEventListener("click", function () {
+    }));
+    tarjeta.appendChild(crearBoton("Eliminar", function () {
         eliminarAuditoria(a.id);
-    });
-    tarjeta.appendChild(botonEliminar);
+    }));
 
     return tarjeta;
 }

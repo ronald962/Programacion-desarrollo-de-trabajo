@@ -1,10 +1,5 @@
-const auditoriaActual = {
-    activo: "Servidor-Web-01 (prueba)",
-    tipo: "web",
-    cerrada: false,
-    justificacion: "",
-    controles: crearControles("web")
-};
+const todas = cargarAuditorias();
+const auditoriaActual = buscarActual(todas);
 
 const estados = [
     { valor: "pendiente", texto: "Pendiente" },
@@ -50,6 +45,16 @@ function actualizarAvance() {
         " de " + avance.total + ", sin contar \"no aplica\")";
 }
 
+function mostrarEstadoCierre() {
+    if (auditoriaActual.cerrada) {
+        botonCerrar.textContent = "Reabrir auditoría";
+        inputJustificacion.disabled = true;
+    } else {
+        botonCerrar.textContent = "Cerrar auditoría";
+        inputJustificacion.disabled = false;
+    }
+}
+
 function dibujarControl(control) {
     const tarjeta = document.createElement("article");
     const grupo = document.createElement("fieldset");
@@ -77,6 +82,7 @@ function dibujarControl(control) {
 
         radio.addEventListener("change", function () {
             control.estado = opcionEstado.valor;
+            guardarAuditorias(todas);
             actualizarAvance();
 
             if (selectEstado.value !== "") {
@@ -108,6 +114,7 @@ function dibujarControl(control) {
 
     cajaNota.addEventListener("input", function () {
         control.nota = cajaNota.value;
+        guardarAuditorias(todas);
     });
 
     parrafoNota.appendChild(etiquetaNota);
@@ -137,13 +144,18 @@ function mostrarControles() {
     }
 
     mensajeVacio.hidden = cantidad > 0;
+    mensajeVacio.textContent = "No hay controles";
 }
 
-selectCategoria.addEventListener("change", mostrarControles);
-selectPrioridad.addEventListener("change", mostrarControles);
-selectEstado.addEventListener("change", mostrarControles);
+function cerrarOReabrir() {
+    if (auditoriaActual.cerrada) {
+        auditoriaActual.cerrada = false;
+        guardarAuditorias(todas);
+        mostrarEstadoCierre();
+        mostrarControles();
+        return;
+    }
 
-botonCerrar.addEventListener("click", function () {
     let altasPendientes = 0;
 
     for (let i = 0; i < auditoriaActual.controles.length; i++) {
@@ -164,15 +176,35 @@ botonCerrar.addEventListener("click", function () {
 
     auditoriaActual.cerrada = true;
     auditoriaActual.justificacion = justificacion;
+    guardarAuditorias(todas);
 
-    botonCerrar.disabled = true;
-    botonCerrar.textContent = "Auditoría cerrada";
-    inputJustificacion.disabled = true;
+    mostrarEstadoCierre();
     mostrarControles();
-});
+}
 
-textoNombre.textContent = auditoriaActual.activo;
-textoTipo.textContent = nombresTipo[auditoriaActual.tipo];
-llenarCategorias();
-actualizarAvance();
-mostrarControles();
+if (auditoriaActual === null) {
+    textoNombre.textContent = "(ninguna seleccionada)";
+    textoTipo.textContent = "—";
+    mensajeVacio.hidden = false;
+    mensajeVacio.textContent = "No hay una auditoría abierta. Elige una en la página Auditorías.";
+    botonCerrar.disabled = true;
+    inputJustificacion.disabled = true;
+    selectCategoria.disabled = true;
+    selectPrioridad.disabled = true;
+    selectEstado.disabled = true;
+} else {
+    textoNombre.textContent = auditoriaActual.activo;
+    textoTipo.textContent = nombresTipo[auditoriaActual.tipo];
+    inputJustificacion.value = auditoriaActual.justificacion;
+
+    llenarCategorias();
+    actualizarAvance();
+    mostrarEstadoCierre();
+    mostrarControles();
+
+    selectCategoria.addEventListener("change", mostrarControles);
+    selectPrioridad.addEventListener("change", mostrarControles);
+    selectEstado.addEventListener("change", mostrarControles);
+
+    botonCerrar.addEventListener("click", cerrarOReabrir);
+}

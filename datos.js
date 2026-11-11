@@ -83,3 +83,125 @@ function calcularAvance(controles) {
         porcentaje: porcentaje
     };
 }
+
+const CLAVE_AUDITORIAS = "hardening-auditorias";
+const CLAVE_ACTUAL = "hardening-actual";
+
+function guardarAuditorias(lista) {
+    try {
+        localStorage.setItem(CLAVE_AUDITORIAS, JSON.stringify(lista));
+    } catch (error) {
+        alert("No se pudo guardar en el navegador.");
+    }
+}
+
+function esControlValido(c) {
+    if (typeof c !== "object" || c === null) {
+        return false;
+    }
+    if (typeof c.id !== "number") {
+        return false;
+    }
+    if (typeof c.descripcion !== "string" || typeof c.categoria !== "string" || typeof c.nota !== "string") {
+        return false;
+    }
+    if (c.prioridad !== "alta" && c.prioridad !== "media" && c.prioridad !== "baja") {
+        return false;
+    }
+    if (c.estado !== "pendiente" && c.estado !== "aplicado" && c.estado !== "no-aplica") {
+        return false;
+    }
+    return true;
+}
+
+function esAuditoriaValida(a) {
+    if (typeof a !== "object" || a === null) {
+        return false;
+    }
+    if (typeof a.id !== "number") {
+        return false;
+    }
+    if (typeof a.activo !== "string" || typeof a.responsable !== "string") {
+        return false;
+    }
+    if (typeof a.fecha !== "string" || a.fecha.split("-").length !== 3) {
+        return false;
+    }
+    if (a.tipo !== "so" && a.tipo !== "web" && a.tipo !== "red") {
+        return false;
+    }
+    if (Array.isArray(a.controles) === false) {
+        return false;
+    }
+    for (let i = 0; i < a.controles.length; i++) {
+        if (esControlValido(a.controles[i]) === false) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function cargarAuditorias() {
+    let datos = [];
+
+    try {
+        const texto = localStorage.getItem(CLAVE_AUDITORIAS);
+        if (texto !== null) {
+            datos = JSON.parse(texto);
+        }
+    } catch (error) {
+        return [];
+    }
+
+    if (Array.isArray(datos) === false) {
+        return [];
+    }
+
+    const validas = [];
+    for (let i = 0; i < datos.length; i++) {
+        const a = datos[i];
+
+        if (esAuditoriaValida(a)) {
+            a.cerrada = (a.cerrada === true);
+            if (typeof a.justificacion !== "string") {
+                a.justificacion = "";
+            }
+            validas.push(a);
+        }
+    }
+    return validas;
+}
+
+function guardarActual(id) {
+    try {
+        localStorage.setItem(CLAVE_ACTUAL, String(id));
+    } catch (error) {
+        alert("No se pudo guardar en el navegador.");
+    }
+}
+
+function leerIdActual() {
+    try {
+        return Number(localStorage.getItem(CLAVE_ACTUAL));
+    } catch (error) {
+        return 0;
+    }
+}
+
+function olvidarActual() {
+    try {
+        localStorage.removeItem(CLAVE_ACTUAL);
+    } catch (error) {
+    }
+}
+
+function buscarActual(lista) {
+    const id = leerIdActual();
+
+    for (let i = 0; i < lista.length; i++) {
+        if (lista[i].id === id) {
+            return lista[i];
+        }
+    }
+    return null;
+}
