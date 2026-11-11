@@ -21,28 +21,32 @@
     <section class="container">
         <article>
             <h2>Nueva auditoria</h2>
-            <p>
-                <label for="activo">Nombre del activo</label>
-                <input type="text" name="Activo" id="activo" placeholder="Servidor-Web-01" />
-            </p>
-            <p>
-                <label for="responsable">Responsable</label>
-                <input type="text" name="Responsable" id="responsable" placeholder="Arnold" />
-            </p>
-            <p>
-                <label for="fecha">Fecha</label>
-                <input type="date" name="Fecha" id="fecha" />
-            </p>
-            <p>
-                <label for="lista">Tipo de lista</label>
-                <select id="lista">
-                    <option value="">Seleccione...</option>
-                    <option value="so">so</option>
-                    <option value="web">servidor web</option>
-                    <option value="red">red wifi</option>
-                </select>
-            </p>
-            <button type="submit">Crear</button>
+            <form id="formulario">
+                <p>
+                    <label for="activo">Nombre del activo</label>
+                    <input type="text" name="Activo" id="activo" placeholder="Servidor-Web-01" />
+                </p>
+                <p>
+                    <label for="responsable">Responsable</label>
+                    <input type="text" name="Responsable" id="responsable" placeholder="Arnold" />
+                </p>
+                <p>
+                    <label for="fecha">Fecha</label>
+                    <input type="date" name="Fecha" id="fecha" />
+                </p>
+                <p>
+                    <label for="lista">Tipo de lista</label>
+                    <select id="lista">
+                        <option value="">Seleccione...</option>
+                        <option value="so">so</option>
+                        <option value="web">servidor web</option>
+                        <option value="red">red wifi</option>
+                    </select>
+                </p>
+                <button type="submit" id="btn-guardar">Crear</button>
+                <button type="button" id="btn-cancelar" hidden>Cancelar</button>
+                <p id="mensaje"></p>
+            </form>
         </article>
         <article>
             <h2>Auditorias existentes</h2>
@@ -55,6 +59,8 @@
                 <option value="web">servidor web</option>
                 <option value="red">red wifi</option>
             </select>
+            <div id="lista-auditorias"></div>
+            <p id="mensaje-vacio"></p>
         </article>
     </section>
     <footer>
@@ -68,7 +74,8 @@
         <p>Contacto</p>
         <p>Copyright 2026</p>
     </footer>
-    <script src="app.js"></script>
+    <script src="datos.js"></script>
+    <script src="auditoria.js"></script>
 </body>
 
 </html>
