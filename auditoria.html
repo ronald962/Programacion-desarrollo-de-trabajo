@@ -21,31 +21,37 @@
     <section class="container">
         <article>
             <h2>Nueva auditoria</h2>
-            <form id="formulario">
+            <form id="formulario" novalidate>
                 <p>
                     <label for="activo">Nombre del activo</label>
-                    <input type="text" name="Activo" id="activo" placeholder="Servidor-Web-01" />
+                    <input type="text" name="Activo" id="activo" placeholder="Servidor-Web-01"
+                        aria-describedby="error-activo" />
+                    <span id="error-activo" class="mensaje-error" role="alert"></span>
                 </p>
                 <p>
                     <label for="responsable">Responsable</label>
-                    <input type="text" name="Responsable" id="responsable" placeholder="Arnold" />
+                    <input type="text" name="Responsable" id="responsable" placeholder="Arnold"
+                        aria-describedby="error-responsable" />
+                    <span id="error-responsable" class="mensaje-error" role="alert"></span>
                 </p>
                 <p>
                     <label for="fecha">Fecha</label>
-                    <input type="date" name="Fecha" id="fecha" />
+                    <input type="date" name="Fecha" id="fecha" aria-describedby="error-fecha" />
+                    <span id="error-fecha" class="mensaje-error" role="alert"></span>
                 </p>
                 <p>
                     <label for="lista">Tipo de lista</label>
-                    <select id="lista">
+                    <select id="lista" aria-describedby="error-lista">
                         <option value="">Seleccione...</option>
-                        <option value="so">so</option>
-                        <option value="web">servidor web</option>
-                        <option value="red">red wifi</option>
+                        <option value="so">Sistema operativo</option>
+                        <option value="web">Servidor web</option>
+                        <option value="red">Red Wi-Fi</option>
                     </select>
+                    <span id="error-lista" class="mensaje-error" role="alert"></span>
                 </p>
                 <button type="submit" id="btn-guardar">Crear</button>
                 <button type="button" id="btn-cancelar" hidden>Cancelar</button>
-                <p id="mensaje"></p>
+                <p id="mensaje" role="status" aria-live="polite"></p>
             </form>
         </article>
         <article>
