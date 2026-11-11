@@ -150,6 +150,8 @@ function mostrarControles() {
 function cerrarOReabrir() {
     if (auditoriaActual.cerrada) {
         auditoriaActual.cerrada = false;
+        inputJustificacion.removeAttribute("aria-invalid");
+        errorJustificacion.textContent = "";
         guardarAuditorias(todas);
         mostrarEstadoCierre();
         mostrarControles();
@@ -168,10 +170,19 @@ function cerrarOReabrir() {
     const justificacion = inputJustificacion.value.trim();
 
     if (altasPendientes > 0 && justificacion === "") {
-        errorJustificacion.textContent = "Hay " + altasPendientes +
+        inputJustificacion.setAttribute("aria-invalid", "true");
+        errorJustificacion.textContent = "Error: Hay " + altasPendientes +
             " control(es) de prioridad alta pendientes. Escribe una justificación para cerrar.";
+        inputJustificacion.focus();
         return;
     }
+
+    const confirmarCierre = confirm("¿Confirmas que deseas cerrar la auditoría \"" + auditoriaActual.activo + "\"?");
+    if (confirmarCierre === false) {
+        return;
+    }
+
+    inputJustificacion.removeAttribute("aria-invalid");
     errorJustificacion.textContent = "";
 
     auditoriaActual.cerrada = true;
