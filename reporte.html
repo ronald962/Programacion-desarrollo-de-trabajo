@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:;">
+        content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self';">
     <title>Reporte - CHECKLIST HARDENING</title>
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -15,22 +15,22 @@
         <h1 id="titulo">CHECKLIST HARDENING</h1>
         <nav>
             <a href="index.html">INICIO</a>
-            <a href="auditoria.html">AUDITORIA</a>
+            <a href="auditoria.html">AUDITORÍAS</a>
             <a href="checklist.html">CHECKLIST</a>
-            <a href="reporte.html">REPORTE</a>
+            <a href="reporte.html" aria-current="page">REPORTE</a>
         </nav>
     </header>
     <main class="container">
         <section>
             <article>
-                <h2>Reporte de Auditorias</h2>
-                <p id="rep-vacio">No hay una auditoria</p>
+                <h2>Reporte de auditorías</h2>
+                <p id="rep-vacio">No hay una auditoría seleccionada.</p>
             </article>
         </section>
         <div id="lista-reporte" hidden>
             <section>
                 <article>
-                    <h3>Datos de la auditoria</h3>
+                    <h3>Datos de la auditoría</h3>
                     <ul>
                         <li>Activo: <span id="rep-nombre"></span></li>
                         <li>Tipo de lista: <span id="rep-tipo"></span></li>

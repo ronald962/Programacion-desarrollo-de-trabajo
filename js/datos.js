@@ -205,3 +205,47 @@ function buscarActual(lista) {
     }
     return null;
 }
+// ---------- Datos de ejemplo (ficticios) ----------
+const EJEMPLOS = [
+    { activo: "Servidor-Web-01", responsable: "Analista-01", fecha: "2026-03-02", tipo: "web", cerrada: false },
+    { activo: "Servidor-Web-02", responsable: "Analista-02", fecha: "2026-03-05", tipo: "web", cerrada: true },
+    { activo: "Servidor-Web-03", responsable: "Analista-01", fecha: "2026-03-09", tipo: "web", cerrada: false },
+    { activo: "Equipo-SO-01", responsable: "Analista-03", fecha: "2026-03-12", tipo: "so", cerrada: false },
+    { activo: "Equipo-SO-02", responsable: "Analista-02", fecha: "2026-03-14", tipo: "so", cerrada: true },
+    { activo: "Equipo-SO-03", responsable: "Analista-03", fecha: "2026-03-18", tipo: "so", cerrada: false },
+    { activo: "Red-Aula-01", responsable: "Analista-04", fecha: "2026-03-20", tipo: "red", cerrada: false },
+    { activo: "Red-Aula-02", responsable: "Analista-04", fecha: "2026-03-23", tipo: "red", cerrada: true },
+    { activo: "Red-Laboratorio", responsable: "Analista-01", fecha: "2026-03-26", tipo: "red", cerrada: false },
+    { activo: "Equipo-SO-04", responsable: "Analista-02", fecha: "2026-03-30", tipo: "so", cerrada: false }
+];
+
+function crearEjemplos(idInicial) {
+    const lista = [];
+
+    for (let i = 0; i < EJEMPLOS.length; i++) {
+        const modelo = EJEMPLOS[i];
+        const controles = crearControles(modelo.tipo);
+
+        for (let j = 0; j < controles.length; j++) {
+            const resto = (i + j) % 4;
+            if (resto === 0 || resto === 1) {
+                controles[j].estado = "aplicado";
+            } else if (resto === 3) {
+                controles[j].estado = "no-aplica";
+            }
+        }
+
+        lista.push({
+            id: idInicial + i,
+            activo: modelo.activo,
+            responsable: modelo.responsable,
+            fecha: modelo.fecha,
+            tipo: modelo.tipo,
+            cerrada: modelo.cerrada,
+            justificacion: modelo.cerrada ? "Pendientes aceptados hasta la ventana de mantenimiento (dato de ejemplo)." : "",
+            controles: controles
+        });
+    }
+
+    return lista;
+}
