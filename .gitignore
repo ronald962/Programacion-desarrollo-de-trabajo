@@ -1,0 +1,9 @@
+
+.vscode/
+.idea/
+*.swp
+*.swo
+desktop.ini
+dist/
+build/
+*.log
