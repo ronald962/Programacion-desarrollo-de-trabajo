@@ -19,6 +19,11 @@ const botonCancelar = document.getElementById("btn-cancelar");
 const mensaje = document.getElementById("mensaje");
 const inputBuscar = document.getElementById("buscar");
 const selectTipo = document.getElementById("tipo");
+const selectEstadoFiltro = document.getElementById("filtro-estado");
+const selectOrden = document.getElementById("orden");
+const botonEjemplos = document.getElementById("btn-ejemplos");
+const botonExportar = document.getElementById("btn-exportar");
+const mensajeHerramientas = document.getElementById("mensaje-herramientas");
 const contenedor = document.getElementById("lista-auditorias");
 const mensajeVacio = document.getElementById("mensaje-vacio");
 const errorActivo = document.getElementById("error-activo");
@@ -57,8 +62,6 @@ function buscarPosicion(id) {
     return -1;
 }
 
-
-// ---------- CREAR y EDITAR ----------
 
 formulario.addEventListener("submit", function (evento) {
     evento.preventDefault();
@@ -159,31 +162,6 @@ function terminarEdicion() {
     formulario.reset();
 }
 
-function editarAuditoria(id) {
-    const posicion = buscarPosicion(id);
-    const a = auditorias[posicion];
-
-    inputActivo.value = a.activo;
-    inputResponsable.value = a.responsable;
-    inputFecha.value = a.fecha;
-    selectLista.value = a.tipo;
-    selectLista.disabled = true;
-
-    idEditando = id;
-    botonGuardar.textContent = "Guardar cambios";
-    botonCancelar.hidden = false;
-    inputActivo.focus();
-}
-
-function terminarEdicion() {
-    idEditando = null;
-    selectLista.disabled = false;
-    botonGuardar.textContent = "Crear";
-    botonCancelar.hidden = true;
-    mensaje.textContent = "";
-    formulario.reset();
-}
-
 botonCancelar.addEventListener("click", terminarEdicion);
 
 function abrirAuditoria(id) {
@@ -233,6 +211,47 @@ function duplicarAuditoria(id) {
     mostrarAuditorias();
 }
 
+
+// ---------- DATOS DE EJEMPLO y EXPORTACIÓN ----------
+
+botonEjemplos.addEventListener("click", function () {
+    const ejemplos = crearEjemplos(siguienteId);
+    siguienteId += ejemplos.length;
+
+    for (let i = 0; i < ejemplos.length; i++) {
+        auditorias.push(ejemplos[i]);
+    }
+
+    guardarAuditorias(auditorias);
+    mostrarAuditorias();
+    mensajeHerramientas.textContent = "Se cargaron " + ejemplos.length + " auditorías de ejemplo.";
+    mensajeHerramientas.className = "estado-exito";
+});
+
+botonExportar.addEventListener("click", function () {
+    if (auditorias.length === 0) {
+        mensajeHerramientas.textContent = "No hay auditorías para exportar.";
+        mensajeHerramientas.className = "";
+        return;
+    }
+
+    const texto = JSON.stringify(auditorias, null, 2);
+    const archivo = new Blob([texto], { type: "application/json" });
+    const direccion = URL.createObjectURL(archivo);
+
+    const enlace = document.createElement("a");
+    enlace.href = direccion;
+    enlace.download = "auditorias-hardening.json";
+    document.body.appendChild(enlace);
+    enlace.click();
+    document.body.removeChild(enlace);
+    URL.revokeObjectURL(direccion);
+
+    mensajeHerramientas.textContent = "Se exportaron " + auditorias.length + " auditorías en JSON.";
+    mensajeHerramientas.className = "estado-exito";
+});
+
+
 function crearBoton(texto, accion) {
     const boton = document.createElement("button");
     boton.type = "button";
@@ -267,11 +286,7 @@ function crearTarjeta(a) {
     tarjeta.appendChild(parrafoAvance);
 
     const estado = document.createElement("p");
-    if (a.cerrada) {
-        estado.textContent = "Estado: Cerrada";
-    } else {
-        estado.textContent = "Estado: Abierta";
-    }
+    estado.textContent = a.cerrada ? "Estado: Cerrada" : "Estado: Abierta";
     tarjeta.appendChild(estado);
 
     tarjeta.appendChild(crearBoton("Abrir", function () {
@@ -290,22 +305,76 @@ function crearTarjeta(a) {
     return tarjeta;
 }
 
-function mostrarAuditorias() {
-    const texto = inputBuscar.value.trim().toLowerCase();
-    const tipoFiltro = selectTipo.value;
+function ordenarLista(lista, criterio) {
+    const copia = lista.slice();
 
-    contenedor.textContent = "";
+    copia.sort(function (a, b) {
+        if (criterio === "fecha-asc") {
+            return a.fecha < b.fecha ? -1 : (a.fecha > b.fecha ? 1 : 0);
+        }
+        if (criterio === "nombre") {
+            return a.activo.localeCompare(b.activo, "es");
+        }
+        if (criterio === "avance") {
+            return calcularAvance(b.controles).porcentaje - calcularAvance(a.controles).porcentaje;
+        }
+        return a.fecha < b.fecha ? 1 : (a.fecha > b.fecha ? -1 : 0);
+    });
 
-    let cantidad = 0;
+    return copia;
+}
+
+function mostrarResumen() {
+    let abiertas = 0;
+    let cerradas = 0;
+    let porTipo = { so: 0, web: 0, red: 0 };
+    let sumaAvance = 0;
 
     for (let i = 0; i < auditorias.length; i++) {
         const a = auditorias[i];
+        if (a.cerrada) {
+            cerradas++;
+        } else {
+            abiertas++;
+        }
+        porTipo[a.tipo]++;
+        sumaAvance += calcularAvance(a.controles).porcentaje;
+    }
+
+    let promedio = 0;
+    if (auditorias.length > 0) {
+        promedio = Math.round(sumaAvance / auditorias.length);
+    }
+
+    document.getElementById("res-total").textContent = auditorias.length;
+    document.getElementById("res-abiertas").textContent = abiertas;
+    document.getElementById("res-cerradas").textContent = cerradas;
+    document.getElementById("res-so").textContent = porTipo.so;
+    document.getElementById("res-web").textContent = porTipo.web;
+    document.getElementById("res-red").textContent = porTipo.red;
+    document.getElementById("res-promedio").textContent = promedio + " %";
+}
+
+function mostrarAuditorias() {
+    const texto = inputBuscar.value.trim().toLowerCase();
+    const tipoFiltro = selectTipo.value;
+    const estadoFiltro = selectEstadoFiltro.value;
+
+    contenedor.textContent = "";
+
+    const ordenadas = ordenarLista(auditorias, selectOrden.value);
+    let cantidad = 0;
+
+    for (let i = 0; i < ordenadas.length; i++) {
+        const a = ordenadas[i];
 
         const coincideTexto = a.activo.toLowerCase().includes(texto) ||
             a.responsable.toLowerCase().includes(texto);
         const coincideTipo = tipoFiltro === "" || a.tipo === tipoFiltro;
+        const coincideEstado = estadoFiltro === "" ||
+            (estadoFiltro === "cerrada") === a.cerrada;
 
-        if (coincideTexto && coincideTipo) {
+        if (coincideTexto && coincideTipo && coincideEstado) {
             contenedor.appendChild(crearTarjeta(a));
             cantidad++;
         }
@@ -316,14 +385,18 @@ function mostrarAuditorias() {
     } else {
         mensajeVacio.hidden = false;
         if (auditorias.length === 0) {
-            mensajeVacio.textContent = "Aún no hay auditorías.";
+            mensajeVacio.textContent = "Aún no hay auditorías. Crea una o carga los datos de ejemplo.";
         } else {
             mensajeVacio.textContent = "Ninguna auditoría coincide con la búsqueda.";
         }
     }
+
+    mostrarResumen();
 }
 
 inputBuscar.addEventListener("input", mostrarAuditorias);
 selectTipo.addEventListener("change", mostrarAuditorias);
+selectEstadoFiltro.addEventListener("change", mostrarAuditorias);
+selectOrden.addEventListener("change", mostrarAuditorias);
 
 mostrarAuditorias();
