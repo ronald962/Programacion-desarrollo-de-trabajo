@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:;">
-    <title>Auditoria - CHECKLIST HARDENING</title>
+        content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self';">
+    <title>Auditorías - CHECKLIST HARDENING</title>
     <link rel="stylesheet" href="css/style.css" />
 </head>
 
@@ -15,14 +15,15 @@
         <h1 id="titulo">CHECKLIST HARDENING</h1>
         <nav>
             <a href="index.html">INICIO</a>
-            <a href="auditoria.html">AUDITORIA</a>
+            <a href="auditoria.html" aria-current="page">AUDITORÍAS</a>
             <a href="checklist.html">CHECKLIST</a>
             <a href="reporte.html">REPORTE</a>
         </nav>
     </header>
-    <section class="container">
+    <main class="container">
+        <section>
         <article>
-            <h2>Nueva auditoria</h2>
+            <h2>Nueva auditoría</h2>
             <form id="formulario" novalidate>
                 <p>
                     <label for="activo">Nombre del activo</label>
@@ -32,7 +33,7 @@
                 </p>
                 <p>
                     <label for="responsable">Responsable</label>
-                    <input type="text" name="Responsable" id="responsable" placeholder="Arnold"
+                    <input type="text" name="Responsable" id="responsable" placeholder="Analista-01"
                         aria-describedby="error-responsable" />
                     <span id="error-responsable" class="mensaje-error" role="alert"></span>
                 </p>
@@ -49,7 +50,7 @@
                         <option value="web">Servidor web</option>
                         <option value="red">Red Wi-Fi</option>
                     </select>
-                    <span id="error-lista" class="mensaje-error" role="alert"></span>
+                 <span id="error-lista" class="mensaje-error" role="alert"></span>
                 </p>
                 <button type="submit" id="btn-guardar">Crear</button>
                 <button type="button" id="btn-cancelar" hidden>Cancelar</button>
@@ -57,20 +58,61 @@
             </form>
         </article>
         <article>
-            <h2>Auditorias existentes</h2>
-            <label for="buscar">Buscar</label>
-            <input type="text" name="Buscar" id="buscar" placeholder="Red UNAS" />
-            <label for="tipo">Tipo</label>
-            <select id="tipo">
-                <option value="">Todos</option>
-                <option value="so">so</option>
-                <option value="web">servidor web</option>
-                <option value="red">red wifi</option>
-            </select>
+            <h2>Resumen</h2>
+            <ul id="resumen-auditorias" aria-live="polite">
+                <li>Total de auditorías: <span id="res-total">0</span></li>
+                <li>Abiertas: <span id="res-abiertas">0</span> · Cerradas: <span id="res-cerradas">0</span></li>
+                <li>Sistema operativo: <span id="res-so">0</span> · Servidor web: <span id="res-web">0</span> ·
+                    Red Wi-Fi: <span id="res-red">0</span></li>
+                <li>Avance promedio: <span id="res-promedio">0 %</span></li>
+            </ul>
+        </article>
+  <article>
+            <h2>Auditorías existentes</h2>
+            <p class="barra-herramientas">
+                <button type="button" id="btn-ejemplos">Cargar datos de ejemplo</button>
+                <button type="button" id="btn-exportar">Exportar JSON</button>
+            </p>
+            <p id="mensaje-herramientas" role="status" aria-live="polite"></p>
+            
+            <div class="filtros-contenedor">
+                <p>
+                    <label for="buscar">Buscar</label>
+                    <input type="text" name="Buscar" id="buscar" placeholder="Servidor-Web-01" />
+                </p>
+                <p>
+                    <label for="tipo">Tipo</label>
+                    <select id="tipo">
+                        <option value="">Todos</option>
+                        <option value="so">Sistema operativo</option>
+                        <option value="web">Servidor web</option>
+                        <option value="red">Red Wi-Fi</option>
+                    </select>
+                </p>
+                <p>
+                    <label for="filtro-estado">Estado</label>
+                    <select id="filtro-estado">
+                        <option value="">Todos</option>
+                        <option value="abierta">Abierta</option>
+                        <option value="cerrada">Cerrada</option>
+                    </select>
+                </p>
+                <p>
+                    <label for="orden">Ordenar por</label>
+                    <select id="orden">
+                        <option value="fecha-desc">Fecha (más reciente)</option>
+                        <option value="fecha-asc">Fecha (más antigua)</option>
+                        <option value="nombre">Nombre del activo</option>
+                        <option value="avance">Avance (mayor primero)</option>
+                    </select>
+                </p>
+            </div>
+
             <div id="lista-auditorias"></div>
             <p id="mensaje-vacio"></p>
         </article>
-    </section>
+        </section>
+    </main>
     <footer>
         <section>
             <a target="_blank" href="https://www.linkedin.com/in/arnold-cesar-ponce-ramirez-b5a504379/"
