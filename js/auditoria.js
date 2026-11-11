@@ -21,7 +21,27 @@ const inputBuscar = document.getElementById("buscar");
 const selectTipo = document.getElementById("tipo");
 const contenedor = document.getElementById("lista-auditorias");
 const mensajeVacio = document.getElementById("mensaje-vacio");
+const errorActivo = document.getElementById("error-activo");
+const errorResponsable = document.getElementById("error-responsable");
+const errorFecha = document.getElementById("error-fecha");
+const errorLista = document.getElementById("error-lista");
 
+function marcarError(campo, contenedorError, textoError) {
+    campo.setAttribute("aria-invalid", "true");
+    contenedorError.textContent = textoError;
+}
+
+function limpiarError(campo, contenedorError) {
+    campo.removeAttribute("aria-invalid");
+    contenedorError.textContent = "";
+}
+
+function limpiarTodosLosErrores() {
+    limpiarError(inputActivo, errorActivo);
+    limpiarError(inputResponsable, errorResponsable);
+    limpiarError(inputFecha, errorFecha);
+    limpiarError(selectLista, errorLista);
+}
 
 function formatearFecha(fecha) {
     const partes = fecha.split("-");
@@ -42,17 +62,41 @@ function buscarPosicion(id) {
 
 formulario.addEventListener("submit", function (evento) {
     evento.preventDefault();
+    limpiarTodosLosErrores();
+    mensaje.textContent = "";
+    mensaje.className = "";
 
     const activo = inputActivo.value.trim();
     const responsable = inputResponsable.value.trim();
     const fecha = inputFecha.value;
     const tipoLista = selectLista.value;
 
-    if (activo === "" || responsable === "" || fecha === "" || tipoLista === "") {
-        mensaje.textContent = "Completa todos los campos.";
+    let primerCampoConError = null;
+
+    if (activo.length < 3) {
+        marcarError(inputActivo, errorActivo, "Error: Ingresa un nombre de activo (mínimo 3 caracteres).");
+        primerCampoConError = primerCampoConError || inputActivo;
+    }
+
+    if (responsable.length < 2) {
+        marcarError(inputResponsable, errorResponsable, "Error: Ingresa el nombre del responsable.");
+        primerCampoConError = primerCampoConError || inputResponsable;
+    }
+
+    if (fecha === "") {
+        marcarError(inputFecha, errorFecha, "Error: Selecciona la fecha de la auditoría.");
+        primerCampoConError = primerCampoConError || inputFecha;
+    }
+
+    if (tipoLista === "") {
+        marcarError(selectLista, errorLista, "Error: Selecciona un tipo de lista.");
+        primerCampoConError = primerCampoConError || selectLista;
+    }
+
+    if (primerCampoConError !== null) {
+        primerCampoConError.focus();
         return;
     }
-    mensaje.textContent = "";
 
     if (idEditando === null) {
         const nueva = {
@@ -68,17 +112,52 @@ formulario.addEventListener("submit", function (evento) {
         siguienteId++;
         auditorias.push(nueva);
         formulario.reset();
+        mensaje.textContent = "Auditoría creada correctamente.";
+        mensaje.className = "estado-exito";
     } else {
         const posicion = buscarPosicion(idEditando);
         auditorias[posicion].activo = activo;
         auditorias[posicion].responsable = responsable;
         auditorias[posicion].fecha = fecha;
         terminarEdicion();
+        mensaje.textContent = "Cambios guardados correctamente.";
+        mensaje.className = "estado-exito";
     }
 
     guardarAuditorias(auditorias);
     mostrarAuditorias();
 });
+
+function editarAuditoria(id) {
+    const posicion = buscarPosicion(id);
+    const a = auditorias[posicion];
+
+    limpiarTodosLosErrores();
+    mensaje.textContent = "";
+    mensaje.className = "";
+
+    inputActivo.value = a.activo;
+    inputResponsable.value = a.responsable;
+    inputFecha.value = a.fecha;
+    selectLista.value = a.tipo;
+    selectLista.disabled = true;
+
+    idEditando = id;
+    botonGuardar.textContent = "Guardar cambios";
+    botonCancelar.hidden = false;
+    inputActivo.focus();
+}
+
+function terminarEdicion() {
+    idEditando = null;
+    selectLista.disabled = false;
+    botonGuardar.textContent = "Crear";
+    botonCancelar.hidden = true;
+    mensaje.textContent = "";
+    mensaje.className = "";
+    limpiarTodosLosErrores();
+    formulario.reset();
+}
 
 function editarAuditoria(id) {
     const posicion = buscarPosicion(id);
