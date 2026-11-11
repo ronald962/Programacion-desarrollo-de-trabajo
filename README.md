@@ -89,7 +89,7 @@ HTML5 semántico, CSS3 y JavaScript puro, sin frameworks. Los datos se guardará
 | E1 Estructura y navegación | Repositorio con README, 3 páginas HTML semánticas con el mismo menú, formulario maquetado y contenedor de datos | `etapa-1-estructura` | `v0.1` | Listo |
 | E2 Diseño responsive | `estilos.css` externo, menú adaptable, variables CSS | `etapa-2-css` | `v0.2` | Listo |
 | E3 Registro y presentación de datos | JavaScript con `localStorage`, búsqueda, filtros, orden, resumen, edición, eliminación, datos de ejemplo y exportación | `etapa-3-datos` | `v0.3` | Listo |
-| E4 Interfaz, validación y usabilidad | Validación accesible, estados de la interfaz, confirmaciones y 5 heurísticas de Nielsen | `etapa-4-interfaz` | `v0.4` | Pendiente |
+| E4 Interfaz, validación y usabilidad | Validación accesible, estados de la interfaz, confirmaciones y 5 heurísticas de Nielsen | `etapa-4-interfaz` | `v0.4` | Listo |
 | E5 Integración y entrega | Pruebas manuales, revisión de seguridad, GitHub Pages, reflexión sobre frameworks e informe final | `etapa-5-entrega` | `v1.0` | Pendiente |
  
 ## Publicación
