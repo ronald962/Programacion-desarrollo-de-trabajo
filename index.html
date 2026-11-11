@@ -5,52 +5,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:;">
-    <title>Introduccion</title>
+        content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self';">
+    <title>Inicio - CHECKLIST HARDENING</title>
     <link rel="stylesheet" href="css/style.css" />
 </head>
 
-<body>
+<body data-pagina="index">
     <header>
         <h1 id="titulo">CHECKLIST HARDENING</h1>
+        <nav>
+            <a href="index.html" aria-current="page">INICIO</a>
+            <a href="auditoria.html">AUDITORÍAS</a>
+            <a href="checklist.html">CHECKLIST</a>
+            <a href="reporte.html">REPORTE</a>
+        </nav>
     </header>
-    <section class="container">
+    <main class="container">
+        <section>
         <article>
-            <h3>Proposito</h3>
+            <h2>Propósito</h2>
             <p>Proporcionar una metodología ordenada, práctica y repetible para configurar
-                de forma segura un sistema operativo, servidor, aplicación o red</p>
+                de forma segura un sistema operativo, servidor, aplicación o red.</p>
+        </article>
+        <article>
+            <h2>Cómo usar la herramienta</h2>
+            <ol>
+                <li>Crea una auditoría para un activo en la página Auditorías.</li>
+                <li>Abre la auditoría y marca cada control como pendiente, aplicado o no aplica.</li>
+                <li>Cierra la auditoría y revisa o imprime el reporte.</li>
+            </ol>
         </article>
         <article>
             <h2 id="indicacion">Seleccione una de las opciones siguientes</h2>
         </article>
         <article>
             <a href="auditoria.html">
-                <h3>Auditoría</h3>
+                <h3>Auditorías</h3>
                 <p>Revisión de seguridad de un activo concreto.</p>
             </a>
         </article>
         <article>
-            <a href="auditoria.html">
+            <a href="checklist.html">
                 <h3>Checklist</h3>
                 <p>Lista de medidas de seguridad que se revisan, según su tipo.</p>
             </a>
         </article>
         <article>
-            <a href="auditoria.html">
+            <a href="reporte.html">
                 <h3>Reporte</h3>
                 <p>Resumen de la auditoría. Solo lee la auditoría y calcula un resumen para mostrar o imprimir.</p>
             </a>
         </article>
         <article>
-            <h3>Integrantes del proyecto</h3>
+            <h2>Integrantes del proyecto</h2>
             <ul>
                 <li>Arnold Cesar Ponce Ramirez</li>
-            </ul>
-            <ul>
-                <li>Sayuri Shandal Lazo Gonzales</li>
+                <li>Sayury Shandal Lazo Gonzales</li>
             </ul>
         </article>
-    </section>
+        </section>
+    </main>
     <footer>
         <section>
             <a target="_blank" href="https://www.linkedin.com/in/arnold-cesar-ponce-ramirez-b5a504379/"
